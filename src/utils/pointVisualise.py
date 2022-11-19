@@ -8,6 +8,9 @@ def showPointCloud(cloud):
     fig = mpl.figure()
     ax = fig.add_subplot(projection="3d")
     ax.scatter(cloud[::10,0],cloud[::10,1], cloud[::10,2])
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
     mpl.show()
 
 def parseObjFile(filename):
