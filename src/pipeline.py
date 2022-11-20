@@ -1,27 +1,44 @@
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
+import os
+import itertools
+import utils.pointVisualise as pv
 
-# this is the pca stuff and kmeans clustering stuff, it would be a joke to make a module including it so just writing what is needed in pipeline below:
 
-# assuming that it is getting effectively a list of n-sized lists
 
-temp_n = 7
-temp_num_data = 20
-temp_test_data = [np.random.rand(temp_n) for _ in range(temp_num_data)]
+# Read in data
+dir = os.listdir("data/faces")
+faces = []
+for file in dir:
+    if file[-3:] == "obj":
+        read = pv.parseObjFile(f"data/faces/{file}")
+        colour = False
+        padding = [0,0,0]
+    elif file[-3:] == "pts":
+        read = pv.parsePtsFile(f"data/faces/{file}")
+        colour = True
+        padding = [0,0,0,0,0,0]
+    else:
+        continue
+    faces.append(list(read))
 
-num_new_features = 0.90
-num_clusters = 2
-
-data_features = temp_test_data
+# I can't reshape this shit without breaking it bigtime so just remember it's faces[<pointNumber>,<faceNumber>,<xyz>]
+# so to get all points from face 13, do faces[:,13,:]
+faces = np.array(list(itertools.zip_longest(*faces, fillvalue=padding)))
+pv.showPointCloud(faces[:, 0, :])
+# Gather principal components to cover 95% of the variance, then discard
+pca_coverage = 0.95
 
 # pca
-pca = PCA(n_components=num_new_features)
-transformed_features = pca.fit_transform(data_features)
-print(transformed_features)
+pca = PCA(n_components=pca_coverage)
+#transformed_features = pca.fit_transform()
 
 # k means clustering
-fitted_cluster_estimator = KMeans(n_clusters=num_clusters).fit(transformed_features)
-cluster_labeled_data = fitted_cluster_estimator.predict(transformed_features)
+inertia = []
+#for i in range(11):
+#    fitted_cluster_estimator = KMeans(n_clusters=i).fit(transformed_features)
+#    cluster_labeled_data = fitted_cluster_estimator.predict(transformed_features)
+#    inertia.append(fitted_cluster_estimator.interia_)
 
-print(cluster_labeled_data)
+
