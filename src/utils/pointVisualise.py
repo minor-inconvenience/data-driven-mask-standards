@@ -73,6 +73,17 @@ def parsePtsFile(filename):
     cloud[:, 2] -= cloud[:, 2].mean()
     return cloud
 
+def parse_2d():
+    import pandas as pd
+
+    facemap = pd.read_csv("data/from2d/face_points_matthew.csv", usecols=[1, 2, 3]).to_numpy()
+    facemap[:, 0] -= facemap[:, 0].mean()
+    facemap[:, 1] -= facemap[:, 1].mean()
+    facemap[:, 2] -= facemap[:, 2].mean()
+
+    showPointCloud(facemap, resolution=1)
+    pass
+
 
 if __name__ == "__main__":
     # For pycharm, give it the path to the repo here

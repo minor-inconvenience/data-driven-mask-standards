@@ -57,7 +57,7 @@ def addClusterIndexToNPArrayPTS(ptsData):
     print(ptsData.shape)
     ptsData = ptsData[::1000]
     print(ptsData.shape)
-    clustered_indexes = DBSCAN(eps=0.0006, min_samples=5, metric=computeDistanceScaledByColourRatio).fit_predict(ptsData)
+    clustered_indexes = DBSCAN(eps=0.0007, min_samples=5, metric=computeDistanceScaledByColourRatio).fit_predict(ptsData)
     print(clustered_indexes)
     clustered_indexes = clustered_indexes.reshape((len(clustered_indexes), 1))
     return np.concatenate((ptsData, clustered_indexes), axis = 1)
@@ -99,8 +99,8 @@ def checkNeighbourCluster(neihgbourIndexes):
     return mode(cluster_list)
 
 
-clustered_face = addClusterIndexToNPArrayPTS(np_pts)
-print("clustered!")
-clustered_point_cloud = upscaleImage(clustered_face, np_pts)
-print(clustered_point_cloud.shape)
-pv.showPointCloud(clustered_point_cloud, plotColourForMyFunction=True, resolution=1)
+# clustered_face = addClusterIndexToNPArrayPTS(np_pts)
+# print("clustered!")
+# clustered_point_cloud = upscaleImage(clustered_face, np_pts)
+# print(clustered_point_cloud.shape)
+# pv.showPointCloud(clustered_point_cloud, plotColourForMyFunction=True, resolution=1)
