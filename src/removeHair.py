@@ -13,7 +13,7 @@ def differenceRatioBetweenColours(rgb1, rgb2):
     return diff_dist/max_dist
 
 
-max_dist_value_for_neighbour = 0.03
+max_dist_value_for_neighbour = 0.1
 def computeDistanceScaledByColourRatio(dp1, dp2):
     xyz1 = dp1[:3]
     rgb1 = dp1[3:]
@@ -27,17 +27,40 @@ def computeDistanceScaledByColourRatio(dp1, dp2):
         return ((col_dist**2) * spatial_dist)
 
 
-pv.showPointCloud(pv.parsePtsFile("data/matthew.pts"), plotColour=True)
+#pv.showPointCloud(pv.parsePtsFile("data/matthew.pts"), plotColour=True)
 
 
 
-print((pv.parseObjFile("data/matthew.obj")[0, :]))
-print((pv.parsePtsFile("data/matthew.pts")[0, :]))
+#np_obj = pv.parseObjFile("data/matthew.obj")
+np_pts = pv.parsePtsFile("data/matthew.pts")
+
+#np_obj = np_obj[np_obj[:, 0].argsort()]
+#np_pts = np_pts[np_pts[:, 0].argsort()]
 
 
-#def constructDistanceColourMatrix(ptsData):
-#    return distance.pdist(ptsData, metric=computeDistanceScaledByColourRatio)
+#a = np.array([[1, 234, 534, 123, 1345, 123, 2], [0, 234, 534, 123, 1345, 123, 2]])
+#a = a[a[:, 1].argsort()]
+#print(a.shape)
+
+#for i in range(20):
+#    print(np_obj[i, :])
+#    print(np_pts[i, :])
+
+
+
+
+def constructDistanceColourMatrix(ptsData):
+    return distance.pdist(ptsData, metric=computeDistanceScaledByColourRatio)
     
 
+def addClusterIndexToNPArrayPTS(ptsData):
+    print(ptsData.shape)
+    ptsData = ptsData[::1000]
+    print(ptsData.shape)
+    clustered_indexes = DBSCAN(eps=0.000065, metric=computeDistanceScaledByColourRatio).fit_predict(ptsData)
+    print(clustered_indexes)
+    return np.concatenate((ptsData, clustered_indexes), axis = 1)
 
 
+
+clustered_face = addClusterIndexToNPArrayPTS(np_pts)
