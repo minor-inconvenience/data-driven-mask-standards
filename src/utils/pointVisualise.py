@@ -2,13 +2,16 @@ import numpy as np
 import matplotlib.pyplot as mpl
 
 
-def showPointCloud(cloud):
+def showPointCloud(cloud, plotColour=None):
     """
     Show the point cloud (np array) with matplotlob 3D Scatter, where the array is a (3,n) array of [x,y,z] points
     """
     fig = mpl.figure()
     ax = fig.add_subplot(projection="3d")
-    ax.scatter(cloud[::10, 0], cloud[::10, 1], cloud[::10, 2])
+    if plotColour:
+        ax.scatter(cloud[::10, 0], cloud[::10, 1], cloud[::10, 2], c=cloud[::10, 3:]/255)
+    else:
+        ax.scatter(cloud[::10, 0], cloud[::10, 1], cloud[::10, 2])
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")

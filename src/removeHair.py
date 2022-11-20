@@ -1,8 +1,7 @@
-
 import numpy as np
 from sklearn.cluster import DBSCAN
 from scipy.spatial import distance
-import utils as pv
+import utils.pointVisualise as pv
 
 
 max_pixel_value = np.array([256, 256, 256])
@@ -28,7 +27,12 @@ def computeDistanceScaledByColourRatio(dp1, dp2):
         return ((col_dist**2) * spatial_dist)
 
 
-pv.showPointCloud(pv.parsePtsFile("data/matthew.pts"))
+pv.showPointCloud(pv.parsePtsFile("data/matthew.pts"), plotColour=True)
+
+
+
+print((pv.parseObjFile("data/matthew.obj")[0, :]))
+print((pv.parsePtsFile("data/matthew.pts")[0, :]))
 
 
 #def constructDistanceColourMatrix(ptsData):
