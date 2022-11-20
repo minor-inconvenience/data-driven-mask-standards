@@ -26,10 +26,13 @@ for file in dir:
 # I can't reshape this shit without breaking it bigtime so just remember it's faces[<pointNumber>,<faceNumber>,<xyz>]
 # so to get all points from face 13, do faces[:,13,:]
 faces = np.array(list(itertools.zip_longest(*faces, fillvalue=padding)))
-pv.showPointCloud(faces[:, 0, :])
+# Example extraction of one face:
+# pv.showPointCloud(faces[:, 0, :])
+
+### Extract variables from face data
+
 # Gather principal components to cover 95% of the variance, then discard
 pca_coverage = 0.95
-
 # pca
 pca = PCA(n_components=pca_coverage)
 #transformed_features = pca.fit_transform()
