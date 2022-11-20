@@ -2,16 +2,17 @@ import numpy as np
 import matplotlib.pyplot as mpl
 
 
-def showPointCloud(cloud, plotColour=None):
+def showPointCloud(cloud, plotColour=None, resolution=10):
     """
     Show the point cloud (np array) with matplotlob 3D Scatter, where the array is a (3,n) array of [x,y,z] points
     """
     fig = mpl.figure()
     ax = fig.add_subplot(projection="3d")
+    strippedCloud = cloud[::resolution, :]
     if plotColour:
-        ax.scatter(cloud[::10, 0], cloud[::10, 1], cloud[::10, 2], c=cloud[::10, 3:]/255)
+        ax.scatter(strippedCloud[:, 0], strippedCloud[:, 1], strippedCloud[:, 2], c=strippedCloud[:, 3:]/255)
     else:
-        ax.scatter(cloud[::10, 0], cloud[::10, 1], cloud[::10, 2])
+        ax.scatter(strippedCloud[:, 0], strippedCloud[:, 1], strippedCloud[:, 2])
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
@@ -66,6 +67,5 @@ if __name__ == "__main__":
     # os.chdir("<path>/data-driven-mask-standards")
 
     # cloud = parseObjFile("data/scans/FaMoS_180424_03335_TA/natural_head_rotation.000001.obj")
-    # cloud = parsePtsFile("data/Matthew.pts")
-    cloud = parseObjFile(r'C:\Users\keyin\Downloads\test_01.obj')
-    showPointCloud(cloud)
+    cloud = parsePtsFile("data/Matthew.pts")
+    showPointCloud(cloud, plotColour=True, resolution=10)
