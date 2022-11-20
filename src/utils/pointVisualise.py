@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as mpl
+import random
 
 
-def showPointCloud(cloud, plotColour=None, resolution=10):
+def showPointCloud(cloud, plotColour=None, plotColourForMyFunction=None, resolution=10):
     """
     Show the point cloud (np array) with matplotlob 3D Scatter, where the array is a (3,n) array of [x,y,z] points
     """
@@ -10,7 +11,19 @@ def showPointCloud(cloud, plotColour=None, resolution=10):
     ax = fig.add_subplot(projection="3d")
     strippedCloud = cloud[::resolution, :]
     if plotColour:
+        print("ahsda")
         ax.scatter(strippedCloud[:, 0], strippedCloud[:, 1], strippedCloud[:, 2], c=strippedCloud[:, 3:]/255)
+    elif plotColourForMyFunction:
+        r_offset = random.randint(0, 255)
+        g_offset = random.randint(0, 255)
+        b_offset = random.randint(0, 255)
+        strippedCloud[:, 6] += 1
+        max_cluster_name = strippedCloud[:, 6].max()
+        print(max_cluster_name)
+        strippedCloud[:, 6] = strippedCloud[:, 6] * 255 / (max_cluster_name+1)
+        colour_array = np.array([(strippedCloud[:, 6] + r_offset).astype(int) % 255, (strippedCloud[:, 6] + g_offset).astype(int) % 255, (strippedCloud[:, 6] + b_offset).astype(int) % 255]).T
+        print(colour_array.shape)
+        ax.scatter(strippedCloud[:, 0], strippedCloud[:, 1], strippedCloud[:, 2], c=colour_array/255)#(strippedCloud[:, 6]).astype(int) + r_offset, (strippedCloud[:, 6]).astype(int) + g_offset, (strippedCloud[:, 6]).astype(int) + b_offset))
     else:
         ax.scatter(strippedCloud[:, 0], strippedCloud[:, 1], strippedCloud[:, 2])
     ax.set_xlabel("X")
