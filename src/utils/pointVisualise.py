@@ -18,6 +18,7 @@ def showPointCloud(cloud):
 def parseObjFile(filename):
     """
     Loads a .obj from <filename> to a (3,n) numpy array.
+    :rtype: object
     """
     with open(filename) as file:
         toarr = []
@@ -63,5 +64,5 @@ if __name__ == "__main__":
 
     # cloud = parseObjFile("data/scans/FaMoS_180424_03335_TA/natural_head_rotation.000001.obj")
     # cloud = parsePtsFile("data/Matthew.pts")
-    cloud = parseObjFile("data/Matthew.obj")
+    cloud = parseObjFile(r'C:\Users\keyin\Downloads\test_01.obj')
     showPointCloud(cloud)
