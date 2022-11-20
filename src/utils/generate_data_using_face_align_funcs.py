@@ -25,7 +25,7 @@ file_path = "C:/Users/bazbo/Documents/Uni/IIA/Hackx/data-driven-mask-standards/s
 face_file_path = 'C:/Users/bazbo/Downloads/'
 
 # list of images we're going to get data for
-faces_list = ["cath"]
+faces_list = []
 
 for face in range(0, len(faces_list)):
 
